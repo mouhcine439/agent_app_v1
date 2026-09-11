@@ -12,11 +12,13 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.onTapSearch,
     required this.showBtnSearch,
     required this.centerTitle,
+    this.trailing,
   });
   final String title;
   final bool showBtn, centerTitle, showBtnSearch;
   final void Function()? onTap;
   final void Function()? onTapSearch;
+  final Widget? trailing;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -42,6 +44,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         color: AppColors.whiteColor,
       ),
       centerTitle: centerTitle,
+      actions: trailing == null
+          ? null
+          : [
+              trailing!,
+              const SizedBox(width: 16),
+            ],
       // bottom: PreferredSize(
       //   preferredSize: const Size.fromHeight(1.0),
       //   child: Container(

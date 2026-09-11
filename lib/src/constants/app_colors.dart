@@ -28,4 +28,13 @@ class AppColors {
   // light mode
   static const Color whiteColor = Color(0xffffffff);
   static const Color bgColor = Color(0xffffffff);
+
+  // Couleur de marque "Safaa" (accent doré : logo, CTA, onglet actif)
+  static const Color goldColor = Color(0xFFD98E2B);
+
+  // Badges de statut de tournée
+  static const Color badgeTodoBg = Color(0xFFF7E6C8);
+  static const Color badgeTodoText = Color(0xFF5C3B0F);
+  static const Color badgeDoneBg = Color(0xFFD7EBE5);
+  static const Color badgeDoneText = Color(0xFF2A5248);
 }

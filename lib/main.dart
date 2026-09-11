@@ -1,21 +1,12 @@
-import 'package:agentapp/src/Controllers/initial_controller.dart';
-import 'package:agentapp/src/Views/home/home_screen.dart';
-import 'package:agentapp/src/Views/splash_screen.dart';
-import 'package:agentapp/src/constants/app_colors.dart';
-import 'package:agentapp/src/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_instance/src/bindings_interface.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+import 'src/Controllers/initial_controller.dart';
+import 'src/constants/app_colors.dart';
+import 'src/routes/app_routes.dart';
+import 'src/routes/name_routes.dart';
+
+void main() {
   runApp(const MyApp());
 }
 
@@ -24,18 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(InitialController());
+
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Agent App',
       debugShowCheckedModeBanner: false,
-      initialBinding: BindingsBuilder(() {
-        Get.put(InitialController());
-      }),
       theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: GoogleFonts.poppins().fontFamily,
+        primaryColor: AppColors.primaryColor,
         scaffoldBackgroundColor: AppColors.bgColor,
+        useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      initialRoute: NameRoutes.splashScreen,
       getPages: AppRoutes.pages,
     );
   }
