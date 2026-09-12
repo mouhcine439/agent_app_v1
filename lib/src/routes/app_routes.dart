@@ -1,4 +1,5 @@
 import 'package:agentapp/src/Views/home/home_screen.dart';
+import 'package:agentapp/src/Views/notifications/notifications_screen.dart';
 import 'package:agentapp/src/Views/profile/profile_screen.dart';
 import 'package:agentapp/src/Views/qrcode_and_nfc/qrcode_and_nfc_screen.dart';
 import 'package:agentapp/src/Views/splash_screen.dart';
@@ -22,6 +23,10 @@ class AppRoutes {
     GetPage(
       name: NameRoutes.qrcodeAndNfcScreen,
       page: () => const QrcodeAndNfcScreen(),
+    ),
+    GetPage(
+      name: NameRoutes.notificationsScreen,
+      page: () => const NotificationsScreen(),
     ),
   ];
 }

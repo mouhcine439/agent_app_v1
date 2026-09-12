@@ -1,6 +1,7 @@
 import 'package:agentapp/src/Controllers/auth/auth_controller.dart';
 import 'package:agentapp/src/constants/app_colors.dart';
 import 'package:agentapp/src/constants/app_images.dart';
+import 'package:agentapp/src/constants/app_strings.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
 import 'package:agentapp/src/widgets/custom_button.dart';
 import 'package:agentapp/src/widgets/custom_input.dart';
@@ -44,6 +45,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 30.0),
             Card(
+              margin: EdgeInsets.zero,
               elevation: 0.0,
               color: AppColors.whiteColor,
               shape: RoundedRectangleBorder(
@@ -112,7 +114,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: h * 0.05),
           ],
-        ).paddingSymmetric(horizontal: 10.0),
+        ).paddingSymmetric(horizontal: AppString.horizontalPadding),
       ),
     );
   }

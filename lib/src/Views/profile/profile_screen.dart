@@ -1,4 +1,6 @@
 import 'package:agentapp/src/constants/app_colors.dart';
+import 'package:agentapp/src/constants/app_strings.dart';
+import 'package:agentapp/src/helper/app_alerts.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
 import 'package:agentapp/src/widgets/custom_appbar.dart';
 import 'package:agentapp/src/widgets/custom_text.dart';
@@ -23,8 +25,9 @@ class ProfileScreen extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            SizedBox(height: h * 0.01),
+            SizedBox(height: h * 0.02),
             Card(
+              margin: EdgeInsets.zero,
               color: AppColors.whiteColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
@@ -67,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                     width: 40.0,
                     height: 40.0,
                     decoration: BoxDecoration(
-                      color: AppColors.purpule,
+                      color: AppColors.orangeColor,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     alignment: Alignment.center,
@@ -88,6 +91,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 5.0),
             Card(
+              margin: EdgeInsets.zero,
               color: AppColors.whiteColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
@@ -122,7 +126,16 @@ class ProfileScreen extends StatelessWidget {
                     endIndent: 40.0,
                   ),
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      AppAlerts.customGlobalAlert(
+                        context: context,
+                        colorButton: AppColors.errorColor,
+                        title: "Déconnexion",
+                        content: "Voulez-vous vraiment vous déconnecter ?",
+                        titleBtn: "Oui",
+                        onPressed: () {},
+                      );
+                    },
                     leading: Icon(
                       Icons.logout_rounded,
                       color: AppColors.errorColor,
@@ -143,7 +156,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ],
-        ).paddingSymmetric(horizontal: 10.0),
+        ).paddingSymmetric(horizontal: AppString.horizontalPadding),
       ),
     );
   }

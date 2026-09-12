@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:agentapp/src/constants/app_strings.dart';
+import 'package:agentapp/src/helper/app_local.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +13,7 @@ class AuthController extends GetxController {
   void onInit() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    _remmemberMe();
     super.onInit();
   }
 
@@ -18,6 +22,14 @@ class AuthController extends GetxController {
     emailController.dispose();
     passwordController.dispose();
     super.onClose();
+  }
+
+  void _remmemberMe() async {
+    if (await AppLocal.readDataLocal(key: 'email') != '' &&
+        await AppLocal.readDataLocal(key: 'password') != '') {
+      emailController.text = await AppLocal.readDataLocal(key: 'email');
+      passwordController.text = await AppLocal.readDataLocal(key: 'password');
+    }
   }
 
   RxBool isLoading = false.obs;
@@ -46,6 +58,17 @@ class AuthController extends GetxController {
       if (response.statusCode == 200) {
         isLoading.value = false;
         Get.snackbar('Success', 'Login successful');
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        await AppLocal.saveDataLocal(
+            key: 'token', value: responseBody['token']);
+        await AppLocal.saveDataLocal(
+          key: 'email',
+          value: emailController.text,
+        );
+        await AppLocal.saveDataLocal(
+          key: 'password',
+          value: passwordController.text,
+        );
       } else {
         isLoading.value = false;
         Get.snackbar('Error', 'Login failed');

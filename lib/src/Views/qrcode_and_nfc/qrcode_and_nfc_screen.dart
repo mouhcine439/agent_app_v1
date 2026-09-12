@@ -1,4 +1,5 @@
 import 'package:agentapp/src/constants/app_colors.dart';
+import 'package:agentapp/src/constants/app_strings.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
 import 'package:agentapp/src/widgets/custom_appbar.dart';
 import 'package:agentapp/src/widgets/custom_text.dart';
@@ -23,7 +24,7 @@ class QrcodeAndNfcScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            SizedBox(height: h * 0.01),
+            SizedBox(height: h * 0.02),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Container(
@@ -52,10 +53,11 @@ class QrcodeAndNfcScreen extends StatelessWidget {
                 color: AppColors.blackColor,
               ),
               trailing: Card(
+                margin: EdgeInsets.zero,
                 elevation: 0.0,
                 color: AppColors.valideColor.withValues(alpha: 0.2),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
@@ -87,6 +89,7 @@ class QrcodeAndNfcScreen extends StatelessWidget {
               child: SizedBox(
                 width: w,
                 child: Card(
+                  margin: EdgeInsets.zero,
                   elevation: 0.0,
                   color: AppColors.primaryColor.withValues(alpha: 0.05),
                   shape: RoundedRectangleBorder(
@@ -136,13 +139,14 @@ class QrcodeAndNfcScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: 15.0),
             // nfc
             GestureDetector(
               onTap: () {},
               child: SizedBox(
                 width: w,
                 child: Card(
+                  margin: EdgeInsets.zero,
                   elevation: 0.0,
                   color: AppColors.valideColor.withValues(alpha: 0.05),
                   shape: RoundedRectangleBorder(
@@ -192,7 +196,7 @@ class QrcodeAndNfcScreen extends StatelessWidget {
               ),
             ),
           ],
-        ).paddingSymmetric(horizontal: 10.0),
+        ).paddingSymmetric(horizontal: AppString.horizontalPadding),
       ),
     );
   }
