@@ -78,7 +78,70 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 20.0),
+            CustomText(
+              title: "Paramétres",
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              color: AppColors.blackColor,
+            ),
+            SizedBox(height: 5.0),
+            Card(
+              color: AppColors.whiteColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                side: BorderSide(
+                  color: AppColors.greyColor.withValues(alpha: 0.3),
+                ),
+              ),
+              elevation: 0.0,
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: () {},
+                    leading: Icon(
+                      Icons.password_rounded,
+                      color: AppColors.primaryColor,
+                    ),
+                    title: CustomText(
+                      title: "Changement de mot de passe",
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.blackColor,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: AppColors.blackColor,
+                      size: 18.0,
+                    ),
+                  ),
+                  Divider(
+                    height: 0.0,
+                    color: AppColors.greyColor.withValues(alpha: 0.3),
+                    endIndent: 40.0,
+                  ),
+                  ListTile(
+                    onTap: () {},
+                    leading: Icon(
+                      Icons.logout_rounded,
+                      color: AppColors.errorColor,
+                    ),
+                    title: CustomText(
+                      title: "Déconnexion",
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.errorColor,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: AppColors.errorColor,
+                      size: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ).paddingSymmetric(horizontal: 10.0),
       ),
