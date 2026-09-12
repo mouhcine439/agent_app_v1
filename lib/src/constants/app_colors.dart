@@ -9,7 +9,7 @@ class AppColors {
   static Color greyColorFoncait = Colors.grey[600]!;
   static const Color errorColor = Color(0xffff0000);
   static const Color valideColor = Color(0xff3CCF4E);
-  static const purpule = Color(0xFFA294F9);
+  static const purpule = Color(0xffF37F0C);
   static const redFoncait = Color(0xFFAF1740);
   static const blueColor = Color(0xFF37AFE1);
 

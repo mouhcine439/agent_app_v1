@@ -1,5 +1,7 @@
 import 'package:agentapp/src/Controllers/initial_controller.dart';
+import 'package:agentapp/src/Views/home/widgets/custom_card_home.dart';
 import 'package:agentapp/src/constants/app_colors.dart';
+import 'package:agentapp/src/routes/name_routes.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
 import 'package:agentapp/src/widgets/custom_appbar.dart';
 import 'package:agentapp/src/widgets/custom_text.dart';
@@ -18,24 +20,205 @@ class HomeScreen extends StatelessWidget {
       scafoldBody: Scaffold(
         appBar: CustomAppbar(
           showBtn: false,
-          showBtnSearch: false,
-          title: "Home",
+          showBtnAction: true,
+          title: "Agent app V1",
           centerTitle: true,
+          icon: Icons.person,
+          onTapButton: () => Get.toNamed(NameRoutes.profileScreen),
         ),
         body: Obx(
           () => initialController.isUserHasInternet.value
-              ? ListView(
+              ? Column(
                   children: [
-                    Center(
-                      child: CustomText(
-                        title: "Connection online",
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blackColor,
+                    SizedBox(height: h * 0.01),
+                    Card(
+                      color: AppColors.whiteColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        side: BorderSide(
+                          color: AppColors.greyColor.withValues(alpha: 0.3),
+                        ),
+                      ),
+                      elevation: 0.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          spacing: 6.0,
+                          children: [
+                            Expanded(
+                              child: CustomCardHome(
+                                color: AppColors.valideColor,
+                                secondTitle: "10",
+                                title: "Terminée",
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomCardHome(
+                                color: AppColors.purpule,
+                                secondTitle: "55",
+                                title: "En Cours",
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomCardHome(
+                                color: AppColors.errorColor,
+                                secondTitle: "2",
+                                title: "Annuléé",
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    SizedBox(height: h * 0.01),
+                    Expanded(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.0),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors.greyColor
+                                      .withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      spacing: 20.0,
+                                      children: [
+                                        Container(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryColor
+                                                .withValues(alpha: 0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: Icon(
+                                            Icons.tour_sharp,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            spacing: 6.0,
+                                            children: [
+                                              CustomText(
+                                                title:
+                                                    "Site Casablanca - Siége",
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.blackColor,
+                                              ),
+                                              CustomText(
+                                                title: "Agence Casablanca",
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.normal,
+                                                color: AppColors.blackColor,
+                                              ),
+                                              Row(
+                                                spacing: 6.0,
+                                                children: [
+                                                  Icon(
+                                                    Icons.calendar_month,
+                                                    color: AppColors.blackColor,
+                                                    size: 18.0,
+                                                  ),
+                                                  CustomText(
+                                                    title: "08:00 - 12:00",
+                                                    fontSize: 14.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: AppColors.blackColor,
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Card(
+                                          elevation: 0.0,
+                                          color: AppColors.valideColor
+                                              .withValues(alpha: 0.2),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(100.0),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Row(
+                                              spacing: 4.0,
+                                              children: [
+                                                Icon(
+                                                  Icons.check_circle,
+                                                  color: AppColors.valideColor,
+                                                  size: 18.0,
+                                                ),
+                                                CustomText(
+                                                  title: "Terminée",
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: AppColors.valideColor,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: w,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.vertical(
+                                        bottom: Radius.circular(12.0),
+                                      ),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      spacing: 8.0,
+                                      children: [
+                                        CustomText(
+                                          title: "Commencer",
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: AppColors.whiteColor,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_circle_right_sharp,
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const SizedBox(height: 8.0),
+                        itemCount: 10,
+                      ),
+                    ),
+                    SizedBox(height: h * 0.04),
                   ],
-                )
+                ).paddingSymmetric(horizontal: 10.0)
               : ListView(
                   children: [
                     Center(
