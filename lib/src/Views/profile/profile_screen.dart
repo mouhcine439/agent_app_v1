@@ -147,10 +147,18 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(height: 20.0),
                               CustomButton(
                                 onPressed: () {
-                                  Get.back();
-                                  profileController.changePassword();
+                                  if (profileController
+                                          .currentPasswordController
+                                          .text
+                                          .isNotEmpty &&
+                                      profileController.newPasswordController
+                                          .text.isNotEmpty) {
+                                    Get.back();
+                                    profileController.changePassword();
+                                  } else {
+                                    profileController.changePassword();
+                                  }
                                 },
-                                // profileController.changePassword(),
                                 bgColorButton: AppColors.primaryColor,
                                 title: "Confirmer",
                                 colorText: AppColors.whiteColor,
@@ -191,7 +199,10 @@ class ProfileScreen extends StatelessWidget {
                         title: "Déconnexion",
                         content: "Voulez-vous vraiment vous déconnecter ?",
                         titleBtn: "Oui",
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                          profileController.logOut();
+                        },
                       );
                     },
                     leading: Icon(

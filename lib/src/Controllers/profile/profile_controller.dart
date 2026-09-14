@@ -56,7 +56,7 @@ class ProfileController extends GetxController {
 
   Future<void> logOut() async {
     try {
-      isLoading.value = true;
+      AppAlerts.customAlertLoading(context: Get.overlayContext!);
       Uri url = Uri.parse("${AppString.baseUrl}/auth/logout");
       String token = await AppLocal.readDataLocal(key: 'token');
       var response = await http.post(
@@ -66,20 +66,29 @@ class ProfileController extends GetxController {
           "Authorization": "Bearer $token",
         },
       );
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
       if (response.statusCode == 200) {
+        Get.back();
         log("logout success ${response.body}");
-
-        isLoading.value = false;
+        AppToastNotifiactions.toastNotificationSuccess(
+          context: Get.overlayContext!,
+          title: "Success",
+          content: responseBody['message'],
+        );
         await AppLocal.deleteDataLocal(key: 'token');
         Get.offAllNamed(NameRoutes.loginScreen);
       } else {
-        isLoading.value = false;
+        Get.back();
+        AppToastNotifiactions.toastNotificationError(
+          context: Get.overlayContext!,
+          title: "Erreur",
+          content: responseBody['message'],
+        );
         log("logout failed ${response.body}");
       }
     } catch (e) {
+      Get.back();
       log("error catch $e");
-    } finally {
-      isLoading.value = false;
     }
   }
 
