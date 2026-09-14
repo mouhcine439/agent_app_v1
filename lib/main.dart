@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.bgColor,
       ),
       initialRoute: NameRoutes.splashScreen,
-      home: const HomeScreen(),
+      home: const QrcodeAndNfcScreen(),
       getPages: AppRoutes.pages,
     );
   }

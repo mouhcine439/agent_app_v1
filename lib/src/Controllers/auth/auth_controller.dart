@@ -109,4 +109,28 @@ class AuthController extends GetxController {
   void togglePassword() {
     isAbstractPassword.toggle();
   }
+
+  Future<void> _secondFcmToken() async {
+    try {
+      String token = await AppLocal.readDataLocal(key: 'token');
+      Uri url = Uri.parse('${AppString.baseUrl}/devices');
+      final response = await http.post(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: {
+          'fcm_token': 'security-supervisor-android',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        log("send token success ${response.body}");
+      } else {
+        log("send token error ${response.body}");
+      }
+    } catch (e) {
+      log("error catch send token $e");
+    }
+  }
 }
