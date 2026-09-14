@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:agentapp/src/constants/app_strings.dart';
 import 'package:agentapp/src/helper/app_local.dart';
+import 'package:agentapp/src/helper/app_toast_notifications.dart';
+import 'package:agentapp/src/routes/name_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -35,16 +38,32 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   Future<void> login() async {
     if (emailController.text.isEmpty) {
-      Get.snackbar('Error', 'Please enter email');
+      AppToastNotifiactions.toastNotificationWarning(
+        context: Get.overlayContext!,
+        title: "Attention",
+        content: "Veuillez saisir votre email",
+      );
+      return;
+    }
+    if (!GetUtils.isEmail(emailController.text)) {
+      AppToastNotifiactions.toastNotificationWarning(
+        context: Get.overlayContext!,
+        title: "Attention",
+        content: "Veuillez saisir un email valide",
+      );
       return;
     }
     if (passwordController.text.isEmpty) {
-      Get.snackbar('Error', 'Please enter password');
+      AppToastNotifiactions.toastNotificationWarning(
+        context: Get.overlayContext!,
+        title: "Attention",
+        content: "Veuillez saisir votre mot de passe",
+      );
       return;
     }
     try {
       isLoading.value = true;
-      Uri url = Uri.parse('${AppString.baseUrl}/login');
+      Uri url = Uri.parse('${AppString.baseUrl}/auth/login');
       var response = await http.post(
         url,
         headers: {
@@ -52,15 +71,17 @@ class AuthController extends GetxController {
         },
         body: {
           'email': emailController.text,
-          'password': passwordController.text
+          'password': passwordController.text,
+          'device_name': 'security-supervisor-android',
         },
       );
-      if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-        Get.snackbar('Success', 'Login successful');
-        Map<String, dynamic> responseBody = jsonDecode(response.body);
         await AppLocal.saveDataLocal(
-            key: 'token', value: responseBody['token']);
+          key: 'token',
+          value: responseBody['token'],
+        );
         await AppLocal.saveDataLocal(
           key: 'email',
           value: emailController.text,
@@ -69,13 +90,18 @@ class AuthController extends GetxController {
           key: 'password',
           value: passwordController.text,
         );
+        Get.offAllNamed(NameRoutes.homeScreen);
       } else {
         isLoading.value = false;
-        Get.snackbar('Error', 'Login failed');
+        AppToastNotifiactions.toastNotificationError(
+          context: Get.overlayContext!,
+          title: "Attention",
+          content: responseBody['message'],
+        );
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error', e.toString());
+      log("error catch login $e");
     }
   }
 

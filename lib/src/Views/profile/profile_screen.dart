@@ -1,8 +1,13 @@
+import 'package:agentapp/src/Controllers/profile/profile_controller.dart';
 import 'package:agentapp/src/constants/app_colors.dart';
 import 'package:agentapp/src/constants/app_strings.dart';
 import 'package:agentapp/src/helper/app_alerts.dart';
+import 'package:agentapp/src/helper/app_buttom_sheet.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
 import 'package:agentapp/src/widgets/custom_appbar.dart';
+import 'package:agentapp/src/widgets/custom_button.dart';
+import 'package:agentapp/src/widgets/custom_header_sheet.dart';
+import 'package:agentapp/src/widgets/custom_input.dart';
 import 'package:agentapp/src/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double w = MediaQuery.of(context).size.width,
         h = MediaQuery.of(context).size.height;
+    final ProfileController profileController = Get.put(ProfileController());
     return BodyWidget(
       scafoldBody: Scaffold(
         appBar: CustomAppbar(
@@ -103,7 +109,59 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      profileController.currentPasswordController.clear();
+                      profileController.newPasswordController.clear();
+                      AppButtomSheet.showButtomSheet(
+                        child: SizedBox(
+                          width: w,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CustomHeaderSheet(
+                                title: "Changement de mot de passe",
+                                onTap: () => Get.back(),
+                              ).paddingAll(AppString.horizontalPadding),
+                              SizedBox(height: 10.0),
+                              CustomInput(
+                                myController:
+                                    profileController.currentPasswordController,
+                                maxLines: 1,
+                                hint: "Mot de passe actuel",
+                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.next,
+                                icon: Icons.lock_rounded,
+                              ).paddingSymmetric(
+                                  horizontal: AppString.horizontalPadding),
+                              SizedBox(height: 10.0),
+                              CustomInput(
+                                myController:
+                                    profileController.newPasswordController,
+                                maxLines: 1,
+                                hint: "Nouveau mot de passe",
+                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.done,
+                                icon: Icons.lock_rounded,
+                              ).paddingSymmetric(
+                                  horizontal: AppString.horizontalPadding),
+                              SizedBox(height: 20.0),
+                              CustomButton(
+                                onPressed: () {
+                                  Get.back();
+                                  profileController.changePassword();
+                                },
+                                // profileController.changePassword(),
+                                bgColorButton: AppColors.primaryColor,
+                                title: "Confirmer",
+                                colorText: AppColors.whiteColor,
+                              ).paddingSymmetric(
+                                  horizontal: AppString.horizontalPadding),
+                              SizedBox(height: 10.0),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                     leading: Icon(
                       Icons.password_rounded,
                       color: AppColors.primaryColor,

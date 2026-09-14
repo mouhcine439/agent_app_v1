@@ -2,6 +2,7 @@ import 'package:agentapp/src/Controllers/initial_controller.dart';
 import 'package:agentapp/src/Views/auth/login_screen.dart';
 import 'package:agentapp/src/Views/home/home_screen.dart';
 import 'package:agentapp/src/Views/notifications/notifications_screen.dart';
+import 'package:agentapp/src/Views/profile/profile_screen.dart';
 import 'package:agentapp/src/Views/qrcode_and_nfc/qrcode_and_nfc_screen.dart';
 import 'package:agentapp/src/Views/questions/questions_screen.dart';
 import 'package:agentapp/src/constants/app_colors.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.bgColor,
       ),
       initialRoute: NameRoutes.splashScreen,
-      home: const HomeScreen(),
+      home: const ProfileScreen(),
       getPages: AppRoutes.pages,
     );
   }
