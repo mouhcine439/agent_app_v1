@@ -25,9 +25,9 @@ class ProfileScreen extends StatelessWidget {
         appBar: CustomAppbar(
           title: "Profile",
           showBtn: true,
-          showBtnAction: false,
+          showBtnSearch: false,
           centerTitle: false,
-          icon: Icons.person,
+          
         ),
         body: ListView(
           children: [

@@ -9,16 +9,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     required this.showBtn,
     this.onTap,
-    this.onTapButton,
-    required this.showBtnAction,
+    this.onTapSearch,
+    required this.showBtnSearch,
     required this.centerTitle,
-    required this.icon,
+    this.trailing,
   });
   final String title;
-  final bool showBtn, centerTitle, showBtnAction;
+  final bool showBtn, centerTitle, showBtnSearch;
   final void Function()? onTap;
-  final void Function()? onTapButton;
-  final IconData icon;
+  final void Function()? onTapSearch;
+  final Widget? trailing;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -30,18 +30,10 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () {
                 Get.back();
               },
-              icon: Container(
-                padding: EdgeInsets.all(6.0),
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                // backgroundColor: AppColors.whiteColor,
-                child: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: AppColors.primaryColor,
-                  size: 25,
-                ),
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: AppColors.whiteColor,
+                size: 25,
               ),
             )
           : null,
@@ -51,13 +43,13 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         fontWeight: FontWeight.w600,
         color: AppColors.whiteColor,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(12.0),
-        ),
-      ),
-
       centerTitle: centerTitle,
+      actions: trailing == null
+          ? null
+          : [
+              trailing!,
+              const SizedBox(width: 16),
+            ],
       // bottom: PreferredSize(
       //   preferredSize: const Size.fromHeight(1.0),
       //   child: Container(
@@ -65,55 +57,54 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       //     height: 1,
       //   ),
       // ),
-      actions: [
-        // showBtn == true
-        //     ? GestureDetector(
-        //         onTap: onTap,
-        //         child: Container(
-        //           decoration: const BoxDecoration(
-        //             color: AppColor.primaryColor,
-        //             shape: BoxShape.circle,
-        //           ),
-        //           margin: EdgeInsets.symmetric(
-        //             horizontal: MediaQuery.of(context).size.width * 0.015,
-        //             vertical: MediaQuery.of(context).size.height * 0.008,
-        //           ),
-        //           child: const IconButton(
-        //             onPressed: null,
-        //             icon: Icon(
-        //               Iconsax.add,
-        //               color: AppColor.whiteColor,
-        //               size: 25,
-        //             ),
-        //           ),
-        //         ),
-        //       )
-        //     : const SizedBox.shrink(),
-        showBtnAction == true
-            ? GestureDetector(
-                onTap: onTapButton,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(6.0),
-                  ),
-                  width: 40,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  child: IconButton(
-                    onPressed: null,
-                    icon: Icon(
-                      icon,
-                      color: AppColors.primaryColor,
-                      size: 22,
-                    ),
-                  ),
-                ),
-              )
-            : const SizedBox.shrink(),
-      ],
+      // actions: [
+      //   showBtn == true
+      //       ? GestureDetector(
+      //           onTap: onTap,
+      //           child: Container(
+      //             decoration: const BoxDecoration(
+      //               color: AppColor.primaryColor,
+      //               shape: BoxShape.circle,
+      //             ),
+      //             margin: EdgeInsets.symmetric(
+      //               horizontal: MediaQuery.of(context).size.width * 0.015,
+      //               vertical: MediaQuery.of(context).size.height * 0.008,
+      //             ),
+      //             child: const IconButton(
+      //               onPressed: null,
+      //               icon: Icon(
+      //                 Iconsax.add,
+      //                 color: AppColor.whiteColor,
+      //                 size: 25,
+      //               ),
+      //             ),
+      //           ),
+      //         )
+      //       : const SizedBox.shrink(),
+      //   showBtnSearch == true
+      //       ? GestureDetector(
+      //           onTap: onTapSearch,
+      //           child: Container(
+      //             decoration: const BoxDecoration(
+      //               color: AppColor.primaryColor,
+      //               shape: BoxShape.circle,
+      //             ),
+      //             margin: EdgeInsets.symmetric(
+      //               horizontal: MediaQuery.of(context).size.width * 0.015,
+      //               vertical: MediaQuery.of(context).size.height * 0.008,
+      //             ),
+      //             child: const IconButton(
+      //               onPressed: null,
+      //               icon: Icon(
+      //                 CupertinoIcons.search,
+      //                 color: AppColor.whiteColor,
+      //                 size: 25,
+      //               ),
+      //             ),
+      //           ),
+      //         )
+      //       : const SizedBox.shrink(),
+      // ],
     );
   }
 

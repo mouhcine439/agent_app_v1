@@ -19,8 +19,7 @@ class NotificationsScreen extends StatelessWidget {
           centerTitle: false,
           title: "Notifications",
           showBtn: true,
-          showBtnAction: false,
-          icon: Icons.person,
+          showBtnSearch: false,
         ),
         body: ListView(
           children: [

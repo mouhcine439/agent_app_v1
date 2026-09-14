@@ -18,9 +18,9 @@ class QuestionsScreen extends StatelessWidget {
         appBar: CustomAppbar(
           title: "Questions Controle",
           showBtn: true,
-          showBtnAction: false,
+           showBtnSearch: false,
           centerTitle: false,
-          icon: Icons.person,
+          
         ),
         body: ListView(
           children: [

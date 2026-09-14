@@ -7,6 +7,10 @@ import 'package:agentapp/src/routes/name_routes.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 class AppRoutes {
+  static const String tourDetailScreen = '/tourDetailScreen';
+  static const String scanScreen = '/scanScreen';
+  static const String questionnaireScreen = '/questionnaireScreen';
+  static const String alertsScreen = '/alertsScreen';
   static List<GetPage> pages = [
     GetPage(
       name: NameRoutes.splashScreen,
@@ -28,5 +32,6 @@ class AppRoutes {
       name: NameRoutes.notificationsScreen,
       page: () => const NotificationsScreen(),
     ),
+     
   ];
 }

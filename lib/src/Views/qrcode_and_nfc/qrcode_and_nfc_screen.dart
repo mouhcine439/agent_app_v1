@@ -18,9 +18,9 @@ class QrcodeAndNfcScreen extends StatelessWidget {
         appBar: CustomAppbar(
           title: "Qr Code / Nfc",
           showBtn: true,
-          showBtnAction: false,
+          showBtnSearch: false,
           centerTitle: false,
-          icon: Icons.person,
+         
         ),
         body: Column(
           children: [
