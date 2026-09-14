@@ -77,6 +77,8 @@ class ProfileController extends GetxController {
         );
         await AppLocal.deleteDataLocal(key: 'token');
         Get.offAllNamed(NameRoutes.loginScreen);
+      } else if (response.statusCode == 401) {
+        log("token is invalide login again");
       } else {
         Get.back();
         AppToastNotifiactions.toastNotificationError(
