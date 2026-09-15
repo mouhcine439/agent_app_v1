@@ -29,7 +29,9 @@ class _AlertsScreenState extends State<AlertsScreen> {
       AlertsController(),
     );
 
-    controller.initialize();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.initialize();
+    });
   }
 
   @override

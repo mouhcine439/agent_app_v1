@@ -1,13 +1,12 @@
 import 'package:agentapp/src/Controllers/initial_controller.dart';
-import 'package:agentapp/src/Views/home/widgets/custom_appbar_home.dart';
-import 'package:agentapp/src/Views/home/widgets/custom_card_home.dart';
 import 'package:agentapp/src/constants/app_colors.dart';
-import 'package:agentapp/src/constants/app_strings.dart';
-import 'package:agentapp/src/helper/app_buttom_sheet.dart';
+import 'package:agentapp/src/models/tour_model.dart';
 import 'package:agentapp/src/routes/name_routes.dart';
+import 'package:agentapp/src/widgets/app_bottom_nav_bar.dart';
 import 'package:agentapp/src/widgets/body_widget.dart';
-import 'package:agentapp/src/widgets/custom_header_sheet.dart';
+import 'package:agentapp/src/widgets/custom_appbar.dart';
 import 'package:agentapp/src/widgets/custom_text.dart';
+import 'package:agentapp/src/widgets/tour_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,322 +15,251 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double w = MediaQuery.of(context).size.width,
-        h = MediaQuery.of(context).size.height;
-    final InitialController initialController = Get.find();
+    final InitialController initialController =
+        Get.find<InitialController>();
+
     return BodyWidget(
       scafoldBody: Scaffold(
-        appBar: CustomAppbarHome(
-          title: "Agent app V1",
-          onTapProfile: () => Get.toNamed(NameRoutes.profileScreen),
-          onTapNotification: () => Get.toNamed(NameRoutes.notificationsScreen),
-        ),
-        body: Obx(
-          () => initialController.isUserHasInternet.value
-              ? Column(
+        backgroundColor: AppColors.bgColor,
+
+        // --------------------------------------------------
+        // APP BAR
+        // --------------------------------------------------
+        appBar: CustomAppbar(
+          showBtn: false,
+          showBtnSearch: false,
+          centerTitle: false,
+          title: 'Mes tournées',
+
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Statut connexion
+              Obx(
+                () {
+                  final bool isOnline =
+                      initialController.isUserHasInternet.value;
+
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor.withValues(
+                        alpha: 0.12,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isOnline
+                              ? Icons.wifi_rounded
+                              : Icons.wifi_off_rounded,
+                          color: isOnline
+                              ? AppColors.valideColor
+                              : AppColors.goldColor,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 6),
+                        CustomText(
+                          title: isOnline
+                              ? 'En ligne'
+                              : 'Hors ligne',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.whiteColor,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(width: 8),
+
+              // Utilisateur
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor.withValues(
+                    alpha: 0.12,
+                  ),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: h * 0.02),
-                    // status tours cars
-                    Card(
-                      margin: EdgeInsets.zero,
+                    Icon(
+                      Icons.person_outline_rounded,
                       color: AppColors.whiteColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        side: BorderSide(
-                          color: AppColors.greyColor.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      elevation: 0.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          spacing: 6.0,
-                          children: [
-                            Expanded(
-                              child: CustomCardHome(
-                                color: AppColors.valideColor,
-                                secondTitle: "10",
-                                title: "Terminée",
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomCardHome(
-                                color: AppColors.orangeColor,
-                                secondTitle: "55",
-                                title: "En Cours",
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomCardHome(
-                                color: AppColors.errorColor,
-                                secondTitle: "2",
-                                title: "Annuléé",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      size: 16,
                     ),
-
-                    SizedBox(height: 14.0),
-
-                    // list tours
-                    Expanded(
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(12.0),
-                                  ),
-                                  color: AppColors.whiteColor,
-                                  border: Border.all(
-                                    color: AppColors.greyColor
-                                        .withValues(alpha: 0.3),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    spacing: 20.0,
-                                    children: [
-                                      Container(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primaryColor
-                                              .withValues(alpha: 0.2),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        child: Icon(
-                                          Icons.tour_sharp,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          spacing: 6.0,
-                                          children: [
-                                            CustomText(
-                                              title: "Site Casablanca - Siége",
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.blackColor,
-                                            ),
-                                            CustomText(
-                                              title: "Agence Casablanca",
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.normal,
-                                              color: AppColors.blackColor,
-                                            ),
-                                            Row(
-                                              spacing: 6.0,
-                                              children: [
-                                                Icon(
-                                                  Icons.calendar_month,
-                                                  color: AppColors.blackColor,
-                                                  size: 18.0,
-                                                ),
-                                                CustomText(
-                                                  title: "08:00 - 12:00",
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: AppColors.blackColor,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Card(
-                                        margin: EdgeInsets.zero,
-                                        elevation: 0.0,
-                                        color: AppColors.valideColor
-                                            .withValues(alpha: 0.2),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6.0),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Row(
-                                            spacing: 4.0,
-                                            children: [
-                                              Icon(
-                                                Icons.check_circle,
-                                                color: AppColors.valideColor,
-                                                size: 18.0,
-                                              ),
-                                              CustomText(
-                                                title: "Terminée",
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.normal,
-                                                color: AppColors.valideColor,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        AppButtomSheet.showButtomSheet(
-                                          child: SizedBox(
-                                            width: w,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                CustomHeaderSheet(
-                                                  title: "Détails",
-                                                  onTap: () => Get.back(),
-                                                ).paddingAll(AppString
-                                                    .horizontalPadding),
-                                                GestureDetector(
-                                                  onTap: () {},
-                                                  child: Container(
-                                                    width: w,
-                                                    height: 50.0,
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
-                                                    ),
-                                                    margin: EdgeInsets.symmetric(
-                                                        horizontal: AppString
-                                                            .horizontalPadding),
-                                                    alignment: Alignment.center,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      spacing: 8.0,
-                                                      children: [
-                                                        CustomText(
-                                                          title: "Commencer",
-                                                          fontSize: 16.0,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          color: AppColors
-                                                              .whiteColor,
-                                                        ),
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_circle_right_sharp,
-                                                          color: AppColors
-                                                              .whiteColor,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(height: 10.0),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: w,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.greyColor
-                                              .withValues(alpha: 0.5),
-                                          borderRadius: BorderRadius.vertical(
-                                            bottom: Radius.circular(12.0),
-                                          ),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          spacing: 8.0,
-                                          children: [
-                                            CustomText(
-                                              title: "Détails",
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.normal,
-                                              color: AppColors.blackColor,
-                                            ),
-                                            Icon(
-                                              Icons.remove_red_eye,
-                                              color: AppColors.blackColor,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: w,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor,
-                                        borderRadius: BorderRadius.vertical(
-                                          bottom: Radius.circular(12.0),
-                                        ),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        spacing: 8.0,
-                                        children: [
-                                          CustomText(
-                                            title: "Commencer",
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.normal,
-                                            color: AppColors.whiteColor,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_circle_right_sharp,
-                                            color: AppColors.whiteColor,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(height: 14.0),
-                        itemCount: 10,
-                      ),
-                    ),
-                    SizedBox(height: h * 0.02),
-                  ],
-                ).paddingSymmetric(horizontal: AppString.horizontalPadding)
-              : ListView(
-                  children: [
-                    Center(
-                      child: CustomText(
-                        title: "Connection offline",
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blackColor,
-                      ),
+                    SizedBox(width: 6),
+                    CustomText(
+                      title: 'J. Dupont',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.whiteColor,
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
         ),
+
+        // --------------------------------------------------
+        // BODY
+        // --------------------------------------------------
+        body: Obx(
+          () {
+            final bool isOnline =
+                initialController.isUserHasInternet.value;
+
+            return Column(
+              children: [
+                // Bandeau offline
+                if (!isOnline)
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(
+                      16,
+                      16,
+                      16,
+                      0,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.goldColor.withValues(
+                        alpha: 0.10,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.goldColor.withValues(
+                          alpha: 0.30,
+                        ),
+                      ),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.cloud_off_rounded,
+                          color: AppColors.goldColor,
+                          size: 20,
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: CustomText(
+                            title:
+                                'Mode hors ligne : les données seront synchronisées lorsque la connexion sera rétablie.',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                // Liste des tournées
+                Expanded(
+                  child: mockTours.isEmpty
+                      ? _buildEmptyState()
+                      : ListView.separated(
+                          padding: const EdgeInsets.all(16),
+                          physics:
+                              const BouncingScrollPhysics(),
+                          itemCount: mockTours.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 12),
+                          itemBuilder: (
+                            context,
+                            index,
+                          ) {
+                            final tour = mockTours[index];
+
+                            return TourCard(
+                              tour: tour,
+                              onTap: () {
+                                Get.toNamed(
+                                  NameRoutes.tourDetailScreen,
+                                  arguments: tour,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                ),
+              ],
+            );
+          },
+        ),
+
+        // --------------------------------------------------
+        // BOTTOM NAVIGATION
+        // --------------------------------------------------
+        bottomNavigationBar: AppBottomNavBar(
+          currentIndex: 0,
+          onTap: (index) {
+            if (index == 0) {
+              return;
+            }
+
+            if (index == 1) {
+              Get.toNamed(NameRoutes.alertsScreen);
+              return;
+            }
+
+            if (index == 2) {
+              Get.toNamed(NameRoutes.profileScreen);
+              return;
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  // --------------------------------------------------
+  // EMPTY STATE
+  // --------------------------------------------------
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.route_outlined,
+            size: 50,
+            color: AppColors.greyColor,
+          ),
+          const SizedBox(height: 12),
+          const CustomText(
+            title: 'Aucune tournée',
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColors.blackColor,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 6),
+          CustomText(
+            title:
+                'Aucune tournée ne vous a été affectée.',
+            fontSize: 13,
+            fontWeight: FontWeight.normal,
+            color: AppColors.greyColor,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

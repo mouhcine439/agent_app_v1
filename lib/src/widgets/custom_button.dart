@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
           elevation: WidgetStateProperty.all(0),
           backgroundColor: WidgetStateProperty.all(bgColorButton),
           shape: WidgetStateProperty.all(RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(100.0),
           )),
           shadowColor: WidgetStateProperty.all(Colors.transparent),
           overlayColor: WidgetStateProperty.all(Colors.transparent),

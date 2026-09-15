@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+        return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: BindingsBuilder(() {
         Get.put(InitialController());
@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.bgColor,
       ),
       initialRoute: NameRoutes.splashScreen,
-      home: const QrcodeAndNfcScreen(),
       getPages: AppRoutes.pages,
     );
   }

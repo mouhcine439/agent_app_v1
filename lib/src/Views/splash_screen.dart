@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> startTime() async {
     await Future.delayed(Duration(seconds: 5), () {
-      Get.offAllNamed(NameRoutes.homeScreen);
+Get.offAllNamed(NameRoutes.loginScreen);
     });
   }
 

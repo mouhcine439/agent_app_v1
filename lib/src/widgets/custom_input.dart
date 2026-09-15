@@ -47,13 +47,13 @@ class CustomInput extends StatelessWidget {
         filled: true,
         fillColor: AppColors.whiteColor,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(100.0),
           borderSide: BorderSide(
             color: AppColors.greyColor.withValues(alpha: 0.5),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(100.0),
           borderSide: BorderSide(
             color: AppColors.secondColor,
             width: 1.5,
